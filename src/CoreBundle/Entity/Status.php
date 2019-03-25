@@ -10,7 +10,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CoreBundle\Entity\StatusRepository")
  * @ORM\Table(name="Status")
  */
 class Status

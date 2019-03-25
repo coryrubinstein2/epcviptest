@@ -27,8 +27,7 @@ class Products
     private $name;
 
     /**
-     * @var \CoreBundle\Entity\Status
-     * @ORM\OneToOne(targetEntity="CoreBundle\Entity\Status")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Status")
      * @ORM\JoinColumn(name="status", referencedColumnName="id", nullable=true)
      */
     private $status;

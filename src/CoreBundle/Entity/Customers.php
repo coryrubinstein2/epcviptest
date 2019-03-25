@@ -41,8 +41,7 @@ class Customers
     private $dateOfBirth;
 
     /**
-     * @var \CoreBundle\Entity\Status
-     * @ORM\OneToOne(targetEntity="CoreBundle\Entity\Status")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Status")
      * @ORM\JoinColumn(name="status", referencedColumnName="id", nullable=true)
      */
     private $status;
@@ -141,6 +140,7 @@ class Customers
     public function setDateOfBirth($dateOfBirth)
     {
         $this->dateOfBirth = $dateOfBirth;
+        $this->dateOfBirth->setTimezone(new \DateTimeZone('GMT'));
         return $this;
     }
 
