@@ -27,10 +27,9 @@ class Products
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Status")
-     * @ORM\JoinColumn(name="status", referencedColumnName="id", nullable=true)
+     * @ORM\Column(type="string", name="status")
      */
-    private $status;
+    private $status = 'new';
 
     /**
      * @var \DateTime
@@ -95,7 +94,7 @@ class Products
     }
 
     /**
-     * @return Status
+     * @return mixed
      */
     public function getStatus()
     {
@@ -103,7 +102,7 @@ class Products
     }
 
     /**
-     * @param Status $status
+     * @param mixed $status
      * @return Products
      */
     public function setStatus($status)

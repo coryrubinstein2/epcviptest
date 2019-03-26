@@ -10,9 +10,8 @@ namespace AppBundle\DataFixtures;
 use CoreBundle\Entity\Customers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class CustomerFixtures extends Fixture implements DependentFixtureInterface
+class CustomerFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -30,7 +29,7 @@ class CustomerFixtures extends Fixture implements DependentFixtureInterface
         foreach ($customerArr as $customers)
         {
             $customer = new Customers();
-            $customerData = $this->getCustomerData($manager);
+            $customerData = $this->getCustomerData();
             $customer->setFirstName($customers['first']);
             $customer->setLastName($customers['last']);
             $customer->setDateOfBirth(new \DateTime($customers['dob']));
@@ -43,22 +42,16 @@ class CustomerFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
-    {
-        return [StatusFixtures::class];
-    }
-
     /**
-     * @param $objectManager ObjectManager
      * @return array
      */
-    private function getCustomerData($objectManager)
+    private function getCustomerData()
     {
-        $statuses = ['new', 'approved', 'pending', 'deleted'];
+        $statuses = ['new', 'new', 'deleted', 'deleted', 'approved', 'approved'];
         $randomStatusIndex = array_rand($statuses);
-        $statusObj = $objectManager->getRepository('CoreBundle:Status')->findOneByType($statuses[$randomStatusIndex]);
+        $randomStatus = $statuses[$randomStatusIndex];
 
-        switch ($statusObj->getType())
+        switch ($randomStatus)
         {
             case 'new':
                 $updatedDate = new \DateTime('now', new \DateTimeZone('GMT'));
@@ -69,12 +62,12 @@ class CustomerFixtures extends Fixture implements DependentFixtureInterface
                 $deletedDate = null;
                 break;
             case 'pending':
-                $updatedDate = null;
+                $updatedDate = $updatedDate = new \DateTime('- 2 week', new \DateTimeZone('GMT'));
                 $deletedDate = null;
                 break;
             case 'deleted':
-                $updatedDate = new \DateTime('- 2 weeks', new \DateTimeZone('GMT'));
-                $deletedDate = new \DateTime('- 2 weeks', new \DateTimeZone('GMT'));
+                $updatedDate = new \DateTime('- 3 weeks', new \DateTimeZone('GMT'));
+                $deletedDate = new \DateTime('- 3 weeks', new \DateTimeZone('GMT'));
                 break;
             default:
                 $customerStatus = null;
@@ -82,7 +75,7 @@ class CustomerFixtures extends Fixture implements DependentFixtureInterface
                 $deletedDate = null;
         }
 
-        $statusArr = ['status' => $statusObj, 'updated' => $updatedDate, 'deleted' => $deletedDate];
+        $statusArr = ['status' => $randomStatus, 'updated' => $updatedDate, 'deleted' => $deletedDate];
         return $statusArr;
     }
 }

@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CoreBundle\Entity\CustomersRepository")
  * @ORM\Table(name="Customers")
  */
 class Customers
@@ -41,10 +41,9 @@ class Customers
     private $dateOfBirth;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Status")
-     * @ORM\JoinColumn(name="status", referencedColumnName="id", nullable=true)
+     * @ORM\Column(type="string", name="status")
      */
-    private $status;
+    private $status = 'new';
 
     /**
      * @var \DateTime
@@ -145,7 +144,7 @@ class Customers
     }
 
     /**
-     * @return Status
+     * @return mixed
      */
     public function getStatus()
     {
@@ -153,7 +152,7 @@ class Customers
     }
 
     /**
-     * @param Status $status
+     * @param mixed $status
      * @return Customers
      */
     public function setStatus($status)
