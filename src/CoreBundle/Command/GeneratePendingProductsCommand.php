@@ -46,7 +46,7 @@ class GeneratePendingProductsCommand extends ContainerAwareCommand
                 'issn: '. $pendingProduct->getIssn(),
                 'name: '.$pendingProduct->getName(),
                 'customer: '.$pendingProduct->getCustomer()->getFirstName().' '.$pendingProduct->getCustomer()->getLastName(),
-                'pending since: '.$pendingProduct->getUpdatedAt()->format('F j Y h:i A'),
+                'pending since: '.$this->convertGmtToLocal($pendingProduct->getUpdatedAt())->format('F j Y h:i A'),
                 ''
             ]);
         }
@@ -58,5 +58,16 @@ class GeneratePendingProductsCommand extends ContainerAwareCommand
             '',
             '</info>'
         ]);
+    }
+
+    private function convertGmtToLocal($gmtDate)
+    {
+        /** @var $gmtDate \DateTime */
+        $localTimezone = new \DateTimeZone('America/Los_Angeles');
+        $localOffset = $localTimezone->getOffset($gmtDate);
+        $localInterval = \DateInterval::createFromDateString((string)$localOffset.'seconds');
+        $gmtDate->add($localInterval);
+        $localDate = $gmtDate;
+        return $localDate;
     }
 }

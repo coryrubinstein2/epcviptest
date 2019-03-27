@@ -1,4 +1,5 @@
 services:
-#    api.example:
-#        class: ApiBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    api_request_listner:
+            class: ApiBundle\Listener\ApiRequestListener
+            tags:
+                - { name: kernel.event_listener, event: kernel.terminate, method: onControllerResponse }
