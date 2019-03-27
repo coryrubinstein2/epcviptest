@@ -34,7 +34,10 @@ class CustomerFixtures extends Fixture
             $customerData = $this->getCustomerData();
             $customer->setFirstName($customers['first']);
             $customer->setLastName($customers['last']);
+            $customer->setPassword(bin2hex(random_bytes(11)));
             $customer->setDateOfBirth(new \DateTime($customers['dob']));
+            $customer->setUsername(strtolower($customer->getFirstName()).$customer->getDateOfBirth()->format('md'));
+            $customer->setEmail(strtolower($customer->getFirstName()).'_'.strtolower($customer->getLastName()).'@demo.com');
             $customer->setStatus($customerData['status']);
             $customer->setUpdatedAt($customerData['updated']);
             $customer->setDeletedAt($customerData['deleted']);
@@ -77,7 +80,7 @@ class CustomerFixtures extends Fixture
                 $deletedDate = null;
         }
 
-        $statusArr = ['status' => $randomStatus, 'updated' => $updatedDate, 'deleted' => $deletedDate];
-        return $statusArr;
+        $customerDataArr = ['status' => $randomStatus, 'updated' => $updatedDate, 'deleted' => $deletedDate];
+        return $customerDataArr;
     }
 }

@@ -7,12 +7,20 @@
  */
 
 namespace CoreBundle\Entity;
+use ApiBundle\Security\RandomStringGenerator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="CoreBundle\Entity\CustomersRepository")
+ * @ExclusionPolicy("all")
  * @ORM\Table(name="Customers")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class Customers
 {
@@ -26,9 +34,35 @@ class Customers
     /**
      * @ORM\Id
      * @ORM\Column(name="uuid", type="integer")
+     * @Expose
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $uuid;
+
+    /**
+     * @ORM\Column(name="username", type="string", length=25, unique=true)
+     * @Expose
+     * @Assert\NotBlank
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(name="password", type="string", length=64)
+     * @Assert\NotBlank
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(name="email", type="string", length=60, unique=true)
+     * @Assert\NotBlank
+     * @Assert\Email()
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(name="apiToken", type="string", length=255)
+     */
+    private $apiToken;
 
     /**
      * @ORM\Column(type="string", name="firstName", nullable=true)
@@ -85,6 +119,7 @@ class Customers
         $this->createdAt = new \DateTime();
         $this->createdAt->setTimezone(new \DateTimeZone('GMT'));
         $this->products = new ArrayCollection();
+        $this->apiToken = $this->generateApiToken();
     }
 
     /**
@@ -223,5 +258,85 @@ class Customers
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     * @return Customers
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     * @return Customers
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     * @return Customers
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * @param mixed $apiToken
+     * @return Customers
+     */
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+        return $this;
+    }
+
+    public function generateApiToken()
+    {
+        $generator = new RandomStringGenerator();
+        $tokenLength = 32;
+        $token = $generator->generate($tokenLength);
+        return $token;
     }
 }

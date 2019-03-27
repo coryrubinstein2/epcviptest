@@ -97,7 +97,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 $deletedDate = null;
         }
 
-        $statusArr = ['status' => $randomStatus, 'updated' => $updatedDate, 'deleted' => $deletedDate];
-        return $statusArr;
+        $productDataArr = ['status' => $randomStatus, 'updated' => $updatedDate, 'deleted' => $deletedDate];
+        return $productDataArr;
     }
 }
