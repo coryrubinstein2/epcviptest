@@ -16,6 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Customers
 {
+    const STATUS_NEW = "new";
+    const STATUS_PENDING = "pending";
+    const STATUS_IN_REVIEW = "in review";
+    const STATUS_APPROVED = "approved";
+    const STATUS_INACTIVE = "inactive";
+    const STATUS_DELETED = "deleted";
+
     /**
      * @ORM\Id
      * @ORM\Column(name="uuid", type="integer")
@@ -157,6 +164,11 @@ class Customers
      */
     public function setStatus($status)
     {
+        if (!in_array($status, [self::STATUS_NEW, self::STATUS_PENDING, self::STATUS_IN_REVIEW, self::STATUS_APPROVED, self::STATUS_INACTIVE, self::STATUS_DELETED]))
+        {
+            throw new \Exception("Invalid Status ".$status);
+        }
+
         $this->status = $status;
         return $this;
     }

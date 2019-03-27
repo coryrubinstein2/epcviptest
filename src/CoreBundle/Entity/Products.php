@@ -10,11 +10,18 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CoreBundle\Entity\ProductsRepository")
  * @ORM\Table(name="Products")
  */
 class Products
 {
+    const STATUS_NEW = "new";
+    const STATUS_PENDING = "pending";
+    const STATUS_IN_REVIEW = "in review";
+    const STATUS_APPROVED = "approved";
+    const STATUS_INACTIVE = "inactive";
+    const STATUS_DELETED = "deleted";
+
     /**
      * @ORM\Id
      * @ORM\Column(name="issn", type="string", length=255)
@@ -62,7 +69,7 @@ class Products
 
     public function __construct()
     {
-        $this->issn = 'issn-'.md5(mt_rand(0,10000000));
+        $this->issn = md5(mt_rand(0,10000000));
         $this->createdAt = new \DateTime();
         $this->createdAt->setTimezone(new \DateTimeZone('GMT'));
     }
@@ -107,6 +114,11 @@ class Products
      */
     public function setStatus($status)
     {
+        if (!in_array($status, [self::STATUS_NEW, self::STATUS_PENDING, self::STATUS_IN_REVIEW, self::STATUS_APPROVED, self::STATUS_INACTIVE, self::STATUS_DELETED]))
+        {
+            throw new \Exception("Invalid Status ".$status);
+        }
+
         $this->status = $status;
         return $this;
     }

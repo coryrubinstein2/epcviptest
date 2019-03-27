@@ -23,7 +23,9 @@ class CustomerFixtures extends Fixture
             ['first' => 'Geraldine', 'last' => 'Schwartz', 'dob' => 'June 08, 2001 19:21:34'],
             ['first' => 'Gordy', 'last' => 'Guzman', 'dob' => 'July 12, 1974 21:21:34'],
             ['first' => 'Michelle', 'last' => 'O\'Neill', 'dob' => 'September 14, 1989 09:15:34'],
-            ['first' => 'Gretchen', 'last' => 'Mason', 'dob' => 'February 24, 1994 12:18:44']
+            ['first' => 'Gretchen', 'last' => 'Mason', 'dob' => 'February 24, 1994 12:18:44'],
+            ['first' => 'Martin', 'last' => 'Bishop', 'dob' => 'August 18, 1954 09:38:14'],
+            ['first' => 'Sheila', 'last' => 'McGillicuddy', 'dob' => 'November 30, 1934 13:58:19']
         ];
 
         foreach ($customerArr as $customers)
@@ -47,7 +49,7 @@ class CustomerFixtures extends Fixture
      */
     private function getCustomerData()
     {
-        $statuses = ['new', 'new', 'deleted', 'deleted', 'approved', 'approved'];
+        $statuses = ['new', 'new', 'deleted', 'approved', 'approved'];
         $randomStatusIndex = array_rand($statuses);
         $randomStatus = $statuses[$randomStatusIndex];
 

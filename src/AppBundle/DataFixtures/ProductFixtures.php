@@ -19,15 +19,18 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
     {
         $productArr =
         [
-            [ 'name' => 'iMac'],
-            [ 'name' => 'Power Ranger'],
-            [ 'name' => 'Office Supplies'],
-            [ 'name' => 'Herbal Essences'],
-            [ 'name' => 'Macbook Pro'],
-            [ 'name' => 'Macbook Pro'],
-            [ 'name' => 'VR Headset'],
-            [ 'name' => 'Pencil Sharpener'],
-            [ 'name' => 'Snowboard'],
+            ['name' => 'iMac'],
+            ['name' => 'Power Ranger'],
+            ['name' => 'Office Supplies'],
+            ['name' => 'Herbal Essences'],
+            ['name' => 'Macbook Pro'],
+            ['name' => 'VR Headset'],
+            ['name' => 'Pencil Sharpener'],
+            ['name' => 'Snowboard'],
+            ['name' => 'Pizza'],
+            ['name' => 'Blu-ray'],
+            ['name' => 'Sweater'],
+            ['name' => 'Water Bottle'],
         ];
 
         foreach ($productArr as $products)
@@ -82,7 +85,9 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 break;
             case 'pending':
                 $randomValue = rand(0, 1);
-                $updatedTime = $randomValue === 0 ? '- 5 days' : '- 2 week';
+                $randomHours = rand(1, 24);
+                $randomMinutes = rand(0, 59);
+                $updatedTime = $randomValue === 0 ? $randomHours.':'.$randomMinutes. '- 5 days' : $randomHours.':'.$randomMinutes. '- 2 week';
                 $updatedDate = $updatedDate = new \DateTime($updatedTime, new \DateTimeZone('GMT'));
                 $deletedDate = null;
                 break;
