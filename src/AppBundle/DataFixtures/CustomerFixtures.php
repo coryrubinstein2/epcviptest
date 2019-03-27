@@ -10,9 +10,17 @@ namespace AppBundle\DataFixtures;
 use CoreBundle\Entity\Customers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CustomerFixtures extends Fixture
 {
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     public function load(ObjectManager $manager)
     {
         $customerArr =
@@ -34,7 +42,7 @@ class CustomerFixtures extends Fixture
             $customerData = $this->getCustomerData();
             $customer->setFirstName($customers['first']);
             $customer->setLastName($customers['last']);
-            $customer->setPassword(bin2hex(random_bytes(11)));
+            $customer->setPassword($this->encodePassword($customer));
             $customer->setDateOfBirth(new \DateTime($customers['dob']));
             $customer->setUsername(strtolower($customer->getFirstName()).$customer->getDateOfBirth()->format('md'));
             $customer->setEmail(strtolower($customer->getFirstName()).'_'.strtolower($customer->getLastName()).'@demo.com');
@@ -82,5 +90,17 @@ class CustomerFixtures extends Fixture
 
         $customerDataArr = ['status' => $randomStatus, 'updated' => $updatedDate, 'deleted' => $deletedDate];
         return $customerDataArr;
+    }
+
+    /**
+     * @param $customer Customers
+     * @return string
+     */
+    private function encodePassword($customer)
+    {
+        $encoder = $this->container->get('security.encoder_factory')->getEncoder($customer);
+        $plainPassword = strtolower($customer->getFirstName()).'_pass';
+        $encodedPassword = $encoder->encodePassword($plainPassword, base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
+        return $encodedPassword;
     }
 }

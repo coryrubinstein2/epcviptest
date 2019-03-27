@@ -5,8 +5,9 @@ security:
             ROLE_ADMIN:       ROLE_USER
             ROLE_SUPER_ADMIN: ROLE_ADMIN
     encoders:
-            CoreBundle/Entity/Customers:
-                algorithm: bcrypt
+          CoreBundle\Entity\Customers:
+              algorithm: bcrypt
+              cost: 12
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
