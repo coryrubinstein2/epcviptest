@@ -14,12 +14,22 @@ use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 
 class ApiRequestListener
 {
+    /**
+     * @var LoggerInterface
+     */
     private $logger;
+
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager)
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
+    }
+    public function setEntityManager(EntityManagerInterface $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
 

@@ -51,7 +51,6 @@ class ApiRequests
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->createdAt->setTimezone(new \DateTimeZone('GMT'));
     }
 
     /**

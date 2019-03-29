@@ -76,11 +76,11 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         switch ($randomStatus)
         {
             case 'new':
-                $updatedDate = new \DateTime('now', new \DateTimeZone('GMT'));
+                $updatedDate = new \DateTime('now');
                 $deletedDate = null;
                 break;
             case 'approved':
-                $updatedDate = new \DateTime('- 1 week', new \DateTimeZone('GMT'));
+                $updatedDate = new \DateTime('- 1 week');
                 $deletedDate = null;
                 break;
             case 'pending':
@@ -88,7 +88,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 $randomHours = rand(1, 24);
                 $randomMinutes = rand(0, 59);
                 $updatedTime = $randomValue === 0 ? $randomHours.':'.$randomMinutes. '- 5 days' : $randomHours.':'.$randomMinutes. '- 2 week';
-                $updatedDate = $updatedDate = new \DateTime($updatedTime, new \DateTimeZone('GMT'));
+                $updatedDate = $updatedDate = new \DateTime($updatedTime);
                 $deletedDate = null;
                 break;
             default:

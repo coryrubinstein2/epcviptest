@@ -49,6 +49,7 @@ class CustomerFixtures extends Fixture
             $customer->setStatus($customerData['status']);
             $customer->setUpdatedAt($customerData['updated']);
             $customer->setDeletedAt($customerData['deleted']);
+            $customer->setEnabled(true);
             $manager->persist($customer);
         }
 
@@ -67,20 +68,20 @@ class CustomerFixtures extends Fixture
         switch ($randomStatus)
         {
             case 'new':
-                $updatedDate = new \DateTime('now', new \DateTimeZone('GMT'));
+                $updatedDate = new \DateTime('now');
                 $deletedDate = null;
                 break;
             case 'approved':
-                $updatedDate = new \DateTime('- 1 week', new \DateTimeZone('GMT'));
+                $updatedDate = new \DateTime('- 1 week');
                 $deletedDate = null;
                 break;
             case 'pending':
-                $updatedDate = $updatedDate = new \DateTime('- 2 week', new \DateTimeZone('GMT'));
+                $updatedDate = $updatedDate = new \DateTime('- 2 week');
                 $deletedDate = null;
                 break;
             case 'deleted':
-                $updatedDate = new \DateTime('- 3 weeks', new \DateTimeZone('GMT'));
-                $deletedDate = new \DateTime('- 3 weeks', new \DateTimeZone('GMT'));
+                $updatedDate = new \DateTime('- 3 weeks');
+                $deletedDate = new \DateTime('- 3 weeks');
                 break;
             default:
                 $customerStatus = null;

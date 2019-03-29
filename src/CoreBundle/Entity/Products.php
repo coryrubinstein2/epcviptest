@@ -45,14 +45,12 @@ class Products
 
     /**
      * @ORM\Column(type="string", name="status")
-     * @Expose
      * @Assert\NotBlank
      */
     private $status = 'new';
 
     /**
      * @var \DateTime
-     * @Expose
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
@@ -60,14 +58,12 @@ class Products
     /**
      * @var \DateTime
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
-     * @Expose
      */
     private $updatedAt;
 
     /**
      * @var \DateTime
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
-     * @Expose
      */
     private $deletedAt;
 
@@ -82,7 +78,7 @@ class Products
     {
         $this->issn = md5(mt_rand(0,10000000));
         $this->createdAt = new \DateTime();
-        $this->createdAt->setTimezone(new \DateTimeZone('GMT'));
+        $this->status = self::STATUS_NEW;
     }
 
     /**

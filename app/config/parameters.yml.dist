@@ -7,12 +7,16 @@ parameters:
     database_name: symfony
     database_user: root
     database_password: ~
+    jwt_private_key_path: %kernel.project_dir%/config/jwt/private.pem
+    jwt_public_key_path: %kernel.project_dir%/config/jwt/public.pem
+    jwt_key_pass_phrase: ~
+    cors_allow_origin: '^https?://.*?$'
     # You should uncomment this if you want to use pdo_sqlite
     #database_path: '%kernel.project_dir%/var/data/data.sqlite'
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: ~
+    mailer_user: mailer@user.com
     mailer_password: ~
 
     # A secret key that's used to generate certain security-related tokens

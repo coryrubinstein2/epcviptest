@@ -3,3 +3,10 @@ services:
             class: ApiBundle\Listener\ApiRequestListener
             tags:
                 - { name: kernel.event_listener, event: kernel.terminate, method: onControllerResponse }
+            calls:
+                - method: setLogger
+                  arguments:
+                      - '@logger'
+                - method: setEntityManager
+                  arguments:
+                      - '@doctrine.orm.entity_manager'

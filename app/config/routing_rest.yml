@@ -1,0 +1,3 @@
+login:
+  type: rest
+  resource: CoreBundle\Controller\SecurityController

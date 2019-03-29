@@ -19,19 +19,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerForm extends AbstractType
 {
-    public function formBuilder(FormBuilderInterface $builder)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('username', TextType::class)
             ->add('password', PasswordType::class)
             ->add('email', EmailType::class)
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
+            ->add('firstName', TextType::class, ['required' => false])
+            ->add('lastName', TextType::class, ['required' => false])
             ->add('dateOfBirth', DateType::class,
             [
                 'widget' => 'single_text',
                 'format' => 'MM-dd-yyyy',
                 'invalid_message' => 'The date format is not valid. Format: MM-dd-yyyy',
+                'required' => false
+            ])
+            ->add('updatedAt', DateType::class,
+            [
+                'widget' => 'single_text',
+                'format' => 'MM-dd-yyyy',
+                'invalid_message' => 'The date format is not valid. Format: MM-dd-yyyy',
+                'required' => false
             ])
             ->add('status', ChoiceType::class,
             [

@@ -1,11 +1,14 @@
 api:
-    resource: "@ApiBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: "@ApiBundle/Controller/"
+    prefix:   /api
 
 core:
-    resource: "@CoreBundle/Resources/config/routing.yml"
+    resource: "@CoreBundle/Controller/"
     prefix:   /
 
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+routing_rest:
+    resource: routing_rest.yml
